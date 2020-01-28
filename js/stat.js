@@ -28,7 +28,7 @@ function renderColumn(ctx, x, y, height, color) {
   ctx.fillRect(x, y, BAR_WIDTH, height);
 }
 
-function renderText(ctx, text, font, color, x, y, textAlign) {
+function renderText(ctx, x, y, text, font, color, textAlign) {
   ctx.fillStyle = color;
   ctx.font = font;
   ctx.textAlign = textAlign;
@@ -45,8 +45,8 @@ window.renderStatistics = function (ctx, players, times) {
   var maxTime = Math.round(Math.max.apply(null, times));
 
   renderCloud(ctx, CLOUD_X, CLOUD_Y);
-  renderText(ctx, 'Ура вы победили!', FONT, '#000', CONTENT_X, CONTENT_Y, 'left');
-  renderText(ctx, 'Список результатов:', FONT, '#000', CONTENT_X, CONTENT_Y + CONTENT_GAP, 'left');
+  renderText(ctx, CONTENT_X, CONTENT_Y, 'Ура вы победили!', FONT, '#000', 'left');
+  renderText(ctx, CONTENT_X, CONTENT_Y + CONTENT_GAP, 'Список результатов:', FONT, '#000', 'left');
 
   for (var i = 0; i < players.length; i++) {
     var currentTime = Math.floor(times[i]);
@@ -54,9 +54,8 @@ window.renderStatistics = function (ctx, players, times) {
     var currentX = CONTENT_X + (BAR_WIDTH + COLUMM_GAP) * i;
     var currentY = CLOUD_HEIGHT - CONTENT_GAP - GAP - currentBarHeight;
 
-    renderText(ctx, players[i], FONT, '#000', currentX, CLOUD_HEIGHT - CONTENT_GAP, 'left');
-    renderText(ctx, currentTime, FONT, '#000', currentX, currentY - CONTENT_GAP, 'left');
+    renderText(ctx, currentX, CLOUD_HEIGHT - CONTENT_GAP, players[i], FONT, '#000', 'left');
+    renderText(ctx, currentX, currentY - CONTENT_GAP, currentTime, FONT, '#000', 'left');
     renderColumn(ctx, currentX, currentY, currentBarHeight, getRandomColor(players[i]));
-
   }
 };
